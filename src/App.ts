@@ -9,7 +9,7 @@ const app = express()
 app.use(express.json())
 app.use(cors({ allowedHeaders: "*", origin: "*" }))
 
-const port = 50000
+const port = 3000
 
 const configServer = async () => {
     const map = await mapper()
