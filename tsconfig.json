@@ -1,0 +1,25 @@
+{
+  "compilerOptions": {
+    "forceConsistentCasingInFileNames": true,
+    "newLine": "lf",
+    "noFallthroughCasesInSwitch": true,
+    "noImplicitReturns": true,
+    "noUnusedParameters": false,
+    "noUnusedLocals": false,
+    "rootDir": "./src/",
+    "strict": true,
+    "declaration": true,
+    "moduleResolution": "node",
+    "module": "commonjs",
+    "outDir": "./dist/",
+    "skipLibCheck": true,
+    "target": "es2019",
+    "esModuleInterop": true,
+    "allowJs": true
+  },
+  "include": [
+    "./src/**/*.ts",
+    "src/test.ts",
+    "src/Helpers/TTS.js"
+  ]
+}
