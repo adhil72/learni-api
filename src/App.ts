@@ -18,6 +18,10 @@ const configServer = async () => {
         msg(`Route /${router.path} has been added`)
     });
 
+    app.get("/", (req, res) => {
+        res.send(success("Server is running"))
+    })
+
     app.listen(port, () => {
         msg("Server launched successfully");
     })
