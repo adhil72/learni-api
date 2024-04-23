@@ -3,7 +3,8 @@
   "version": "1.0.0",
   "description": "Backed using express map",
   "scripts": {
-    "dev": "tsc && node ./dist/App.js"
+    "dev": "tsc && node ./dist/App.js",
+    "start": "node ./dist/App.js"
   },
   "license": "ISC",
   "devDependencies": {
