@@ -11,13 +11,7 @@ const dotenv_1 = require("dotenv");
 (0, dotenv_1.config)();
 const app = (0, express_1.default)();
 app.use(express_1.default.json());
-app.use((0, cors_1.default)({ allowedHeaders: "*", origin: "*" }));
-app.use((req, res, next) => {
-    res.setHeader("Access-Control-Allow-Origin", "*");
-    res.setHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE");
-    res.setHeader("Access-Control-Allow-Headers", "Content-Type, Authorization");
-    next();
-});
+app.use((0, cors_1.default)({ allowedHeaders: "*", origin: "*", methods: "*" }));
 const port = 3000;
 const configServer = async () => {
     const map = await (0, Mapper_1.default)();
