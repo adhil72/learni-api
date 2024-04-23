@@ -16,6 +16,9 @@ app.use((0, cors_1.default)({
     credentials: true,
     optionsSuccessStatus: 200
 }));
+app.use((req, res, next) => {
+    req.headers['Access-Control-Allow-Origin'] = '*';
+});
 const port = 3000;
 const configServer = async () => {
     const map = await (0, Mapper_1.default)();
