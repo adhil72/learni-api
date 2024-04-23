@@ -12,12 +12,15 @@ const dotenv_1 = require("dotenv");
 const app = (0, express_1.default)();
 app.use(express_1.default.json());
 app.use((0, cors_1.default)({ allowedHeaders: "*", origin: "*" }));
-const port = 50000;
+const port = 3000;
 const configServer = async () => {
     const map = await (0, Mapper_1.default)();
     map.forEach((router) => {
         app.use('/' + router.path, router.fun);
         (0, Logger_1.msg)(`Route /${router.path} has been added`);
+    });
+    app.get("/", (req, res) => {
+        res.send("Running");
     });
     app.listen(port, () => {
         (0, Logger_1.msg)("Server launched successfully");
