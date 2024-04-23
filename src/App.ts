@@ -19,7 +19,7 @@ const configServer = async () => {
     });
 
     app.get("/", (req, res) => {
-        res.send(success("Server is running"))
+        res.send("Running")
     })
 
     app.listen(port, () => {
