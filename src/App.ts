@@ -7,7 +7,11 @@ import { config } from "dotenv"; config()
 
 const app = express()
 app.use(express.json())
-app.use(cors({ allowedHeaders: "*", origin: "*",methods: "*" }))
+app.use(cors({
+    origin: "http://localhost:3000",
+    credentials: true,
+    optionsSuccessStatus: 200
+}))
 
 const port = 3000
 
