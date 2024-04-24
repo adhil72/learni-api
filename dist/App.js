@@ -11,11 +11,7 @@ const dotenv_1 = require("dotenv");
 (0, dotenv_1.config)();
 const app = (0, express_1.default)();
 app.use(express_1.default.json());
-app.use((0, cors_1.default)({
-    origin: "http://localhost:3000",
-    credentials: true,
-    optionsSuccessStatus: 200
-}));
+app.use((0, cors_1.default)({ allowedHeaders: "*", origin: "*" }));
 app.use((req, res, next) => {
     req.headers['Access-Control-Allow-Origin'] = '*';
 });
