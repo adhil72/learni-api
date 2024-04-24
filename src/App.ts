@@ -10,10 +10,6 @@ app.use(express.json())
 
 app.use(cors({ allowedHeaders: "*", origin: "*" }))
 
-app.use((req, res, next) => {
-    req.headers['Access-Control-Allow-Origin'] = '*'
-})
-
 const port = 3000
 
 const configServer = async () => {
