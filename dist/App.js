@@ -6,12 +6,15 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
 const Mapper_1 = __importDefault(require("./Helpers/Mapper"));
 const Logger_1 = require("./Helpers/Logger");
-const cors_1 = __importDefault(require("cors"));
 const dotenv_1 = require("dotenv");
 (0, dotenv_1.config)();
 const app = (0, express_1.default)();
 app.use(express_1.default.json());
-app.use((0, cors_1.default)({ allowedHeaders: "*", origin: "*" }));
+app.use(function (req, res, next) {
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+    next();
+});
 const port = 3000;
 const configServer = async () => {
     const map = await (0, Mapper_1.default)();
