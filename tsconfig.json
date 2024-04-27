@@ -20,6 +20,7 @@
   "include": [
     "./src/**/*.ts",
     "src/test.ts",
-    "src/Helpers/TTS.js"
+    "src/Helpers/TTS.js",
+    "src/db/config.ts"
   ]
 }

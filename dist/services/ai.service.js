@@ -6,17 +6,22 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.explainService = void 0;
 const gemini_service_1 = require("./gemini.service");
 const AsyncLoop_1 = __importDefault(require("../Helpers/AsyncLoop"));
-const axios_1 = __importDefault(require("axios"));
 const crypto_1 = require("crypto");
 const Image_1 = require("../Helpers/Image");
 const Logger_1 = require("../Helpers/Logger");
 const TTS_1 = __importDefault(require("../Helpers/TTS"));
-const ttsInstance = axios_1.default.create({ baseURL: 'http://localhost:5000' });
+const ai_table_1 = require("../db/Table/ai.table");
 const explainService = async (req) => {
+    if (!req.body.paragraph || !req.body.chat_id)
+        return { message: "Invalid Request", success: false, data: null };
+    let user = req.headers.user;
+    console.log(user);
     let prompt = `You are a teacher. you have to explain the paragraph below as a script. you can also use examples to explain it . To say something, wrap the content int the tag <aud></aud>. To write something on board, wrap the content int the tag <wrt></wrt>. To show a picture on board, wrap the image description in the tag <img>sample: a red ball on table grpahics</img> so that i can generate it using my model.use <title>Suitable title</title> tag to change or set title. always there should be a title. use </clr> to clear board including title.
     always try to write before speaking.
     write the teacher script for following paragraph
-    
+    use indian simple english for explaining
+    do not use any other language
+
     paragraph : ${req.body.paragraph}
     script : `;
     let data = (await (0, gemini_service_1.generate)(prompt));
@@ -53,6 +58,12 @@ const explainService = async (req) => {
             return item;
         }
     });
-    return { message: "Success", data: modified };
+    await (0, ai_table_1.addGenerationQuery)({
+        prompt: req.body.paragraph,
+        script: modified.join('<<<<SPLITTER>>>>'),
+        user_id: user.id,
+        chat_id: req.body.chat_id
+    });
+    return { message: "Success", success: true, data: modified };
 };
 exports.explainService = explainService;
