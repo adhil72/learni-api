@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const Jwt_1 = require("../Helpers/Jwt");
-const publicRoutes = ['/v1/auth'];
+const publicRoutes = ['/v1/auth', '/v1/file'];
 function authentication(req, res, next) {
     var _a;
     if (publicRoutes.includes(req.path))

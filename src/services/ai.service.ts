@@ -13,11 +13,21 @@ export const explainService = async (req: Request) => {
     if (!req.body.paragraph || !req.body.chat_id) return { message: "Invalid Request", success: false, data: null }
     let user = (req.headers as any).user as { email: string, id: string }
     console.log(user);
-    let prompt = `You are a teacher. you have to explain the paragraph below as a script. you can also use examples to explain it . To say something, wrap the content int the tag <aud></aud>. To write something on board, wrap the content int the tag <wrt></wrt>. To show a picture on board, wrap the image description in the tag <img>sample: a red ball on table grpahics</img> so that i can generate it using my model.use <title>Suitable title</title> tag to change or set title. always there should be a title. use </clr> to clear board including title.
+    let prompt = `You are a teacher. you have to explain the paragraph below as a script. it may be a pargraph or question. you can also use examples to explain it . To say something, wrap the content int the tag <aud></aud>. To write something on board, wrap the content in the tag <wrt></wrt>. To show a picture on board, wrap the image description in the tag <img>sample: a red ball on table grpahics</img> so that i can generate it using my model.use <title>Suitable title</title> tag to change or set title. always there should be a title. use </clr> to clear board including title.
     always try to write before speaking.
-    write the teacher script for following paragraph
+
     use indian simple english for explaining
     do not use any other language
+    it should be used html tag and inline css inside <wrt></wrt> tag to show mathemetical equations and other things 
+
+    example of using tags: <wrt><div style="font-size: 18px; font-family: Arial, sans-serif;">x<span style="vertical-align: super; font-size: 0.8em;">2</span> + 5 = 10</div></wrt> //also you can use other html tags like ul,li,h1,h2,h3,h4,h5,h6,span,u,li and etc
+    example of using tags: <aud>the sum of x square and 5 is equal to 10</aud>
+    example of using tags: <img>sample: a red ball on table graphics</img>
+    example of using tags: <title>Simple title</title>
+    example of using tags: </clr>
+
+    always give detailed explanation of paragraph unless it is said to give short explanation
+    always write what is speaking
 
     paragraph : ${req.body.paragraph}
     script : `
@@ -56,6 +66,18 @@ export const explainService = async (req: Request) => {
             return item
         }
     })
+
+    for (let i = 0; i < modified.length; i++) {
+        let item = modified[i]
+        let nextItem = modified[i + 1]
+        if (nextItem) {
+            if (nextItem.includes('<wrt>') && item.includes('<aud>')) {
+                let temp = item
+                modified[i] = nextItem
+                modified[i + 1] = temp
+            }
+        }
+    }
 
     await addGenerationQuery(
         {

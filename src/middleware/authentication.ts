@@ -1,7 +1,7 @@
 import { NextFunction, Request, Response } from "express";
 import { verify } from "../Helpers/Jwt";
 
-const publicRoutes = ['/v1/auth'];
+const publicRoutes = ['/v1/auth','/v1/file'];
 
 export default function authentication(req: Request, res: Response, next: NextFunction) {    
     if (publicRoutes.includes(req.path)) return next();
