@@ -4,7 +4,7 @@
   "description": "Backed using express map",
   "scripts": {
     "dev": "tsc && node ./dist/App.js",
-    "build","tsc",
+    "build":"tsc",
     "test": "node ./dist/App.js"
   },
   "license": "ISC",

@@ -17,6 +17,7 @@ exports.getChatService = getChatService;
 const getChatGenerationsService = async (req) => {
     let chatId = req.query.id;
     let generations = await (0, chats_table_1.fetchChatGenerations)(chatId);
+    console.log(generations.rows);
     return { message: "Success", success: true, data: generations.rows };
 };
 exports.getChatGenerationsService = getChatGenerationsService;

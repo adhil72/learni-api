@@ -11,7 +11,7 @@ const app = express()
 app.use(express.json())
 app.use(cors({ allowedHeaders: '*', origin: '*', methods: '*', credentials: true }))
 
-const port = 3000;
+const port = 50000;
 
 function configurePath() {
     let cwd = process.cwd()

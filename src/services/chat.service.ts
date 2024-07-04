@@ -16,5 +16,7 @@ export const getChatService = async (req: Request) => {
 export const getChatGenerationsService = async (req: Request) => {
     let chatId = req.query.id as string
     let generations = await fetchChatGenerations(chatId)
+    console.log(generations.rows);
+    
     return { message: "Success", success: true, data: generations.rows }
 }

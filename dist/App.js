@@ -15,7 +15,7 @@ const config_1 = __importDefault(require("./db/config"));
 const app = (0, express_1.default)();
 app.use(express_1.default.json());
 app.use((0, cors_1.default)({ allowedHeaders: '*', origin: '*', methods: '*', credentials: true }));
-const port = 3000;
+const port = 50000;
 function configurePath() {
     let cwd = process.cwd();
     let path = cwd + '/public';

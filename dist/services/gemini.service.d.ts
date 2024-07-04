@@ -1,1 +1,1 @@
-export declare const generate: (prompt: string) => Promise<any>;
+export declare const generate: (prompt: string) => Promise<string>;
