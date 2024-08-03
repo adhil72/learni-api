@@ -10,10 +10,8 @@ const crypto_1 = require("crypto");
 const Image_1 = require("../Helpers/Image");
 const Logger_1 = require("../Helpers/Logger");
 const TTS_1 = __importDefault(require("../Helpers/TTS"));
-const ai_table_1 = require("../db/Table/ai.table");
 const explainService = async (req) => {
-    console.log(req.body);
-    if (!req.body.paragraph || !req.body.chat_id)
+    if (!req.body.paragraph)
         return { message: "Invalid Request", success: false, data: null };
     let user = req.headers.user;
     console.log(user);
@@ -82,12 +80,6 @@ const explainService = async (req) => {
         }
     });
     (0, Logger_1.msg)('processing phase : 3 out of 3');
-    await (0, ai_table_1.addGenerationQuery)({
-        prompt: req.body.paragraph,
-        script: modified.join('<<<<SPLITTER>>>>'),
-        user_id: user.id,
-        chat_id: req.body.chat_id
-    });
     (0, Logger_1.msg)('script saved successfully');
     return { message: "Success", success: true, data: modified };
 };

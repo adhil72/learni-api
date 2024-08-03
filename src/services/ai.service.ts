@@ -1,17 +1,13 @@
 import { Request } from "express";
 import { generate } from "./gemini.service";
 import AsyncLoop from "../Helpers/AsyncLoop";
-import { createWriteStream, writeFileSync } from 'fs'
 import { randomUUID } from "crypto"
 import { bingImageLinkScrapper } from "../Helpers/Image";
 import { msg } from "../Helpers/Logger";
 import TTS from "../Helpers/TTS";
-import { addGenerationQuery } from "../db/Table/ai.table";
 
-export const explainService = async (req: Request) => {
-    console.log(req.body);
-
-    if (!req.body.paragraph || !req.body.chat_id) return { message: "Invalid Request", success: false, data: null }
+export const explainService = async (req: Request) => {    
+    if (!req.body.paragraph) return { message: "Invalid Request", success: false, data: null }
     let user = (req.headers as any).user as { email: string, id: string }
     console.log(user);
     let prompt = `You are a teacher. you have to explain the paragraph below as a script. it may be a pargraph or question. you can also use examples to explain it . To say something, wrap the content int the tag <aud></aud>. To write something on board, wrap the content in the tag <wrt></wrt>. To show a picture on board, wrap the image description in the tag <img>sample: a red ball on table grpahics</img> so that i can generate it using my model. use </clr> to clear board including title.
@@ -54,7 +50,7 @@ export const explainService = async (req: Request) => {
     prompt/paragraph : ${req.body.paragraph}
     script : `
     let data = (await generate(prompt)) as any
-    
+
     msg('script generates successfully')
     msg('processing phase : 1 out of3')
     data = data.split('<SPLITTER>') as string[]
@@ -64,9 +60,9 @@ export const explainService = async (req: Request) => {
     let modified = await new AsyncLoop().run(data, async (item: string) => {
         item = (item as any).replaceAll('<img>\"', '<img>').replaceAll('\"</img>', '</img>')
         if (item.includes('<aud>')) {
-            const audText:any = item.replace('<aud>', '').replace('</aud>', '')
-            audText.replaceAll("*","      ")
-            audText.replaceAll("$","")
+            const audText: any = item.replace('<aud>', '').replace('</aud>', '')
+            audText.replaceAll("*", "      ")
+            audText.replaceAll("$", "")
             const fileName = randomUUID() + '.mp3'
             const path = process.cwd() + `/public/audio/${fileName}`
             await TTS(audText, path)
@@ -81,15 +77,6 @@ export const explainService = async (req: Request) => {
     })
 
     msg('processing phase : 3 out of 3')
-
-    await addGenerationQuery(
-        {
-            prompt: req.body.paragraph,
-            script: modified.join('<<<<SPLITTER>>>>'),
-            user_id: user.id,
-            chat_id: req.body.chat_id
-        }
-    )
 
     msg('script saved successfully')
     return { message: "Success", success: true, data: modified }

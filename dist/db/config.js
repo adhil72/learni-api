@@ -6,7 +6,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const pg_1 = __importDefault(require("pg"));
 const { Client } = pg_1.default;
 const client = new Client({
-    connectionString: 'postgres://learni_db_user:mAHY2yfEOnqpWO3I2pG37VvwSThe3TDO@dpg-coln37i0si5c73f4vusg-a.oregon-postgres.render.com/learni_db',
+    connectionString: process.env.DATABASE_URL,
     ssl: {
         rejectUnauthorized: false
     }
