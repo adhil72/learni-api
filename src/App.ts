@@ -9,7 +9,7 @@ import axios from 'axios';
 const app = express()
 app.use(express.json())
 app.use(cors({ allowedHeaders: '*', origin: '*', methods: '*', credentials: true }))
-app.use((r,_,n) => { msg(`${r.method} ${r.path}`); n() })
+app.use((r, _, n) => { msg(`${r.method} ${r.path}`); n() })
 
 const port = 50000;
 
@@ -33,7 +33,5 @@ configServer()
 
 
 setTimeout(() => {
-    axios.post("https://learni-api.onrender.com").then((res)=>{
-
-    })
-}, 1000*5);
+    axios.post("https://learni-api.onrender.com").then((res) => { }).catch((err) => { })
+}, 1000 * 5);
