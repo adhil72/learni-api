@@ -4,7 +4,7 @@ export const bingImageLinkScrapper = async (search: string) => {
     const url = `https://www.bing.com/images/search?q=${search}`;
     const response = await axios.get(url);
 
-    const re = /https:\/\/[0-9a-zA-Z.\/\-_]*\.(png|jpg|jpeg|gif|bmp|svg)/;
+    const re = /https:\/\/[0-9a-zA-Z.\/\-_]*\.(png|jpg|jpeg)/;
     const matches = response.data.match(re);
 
     const res = matches?.slice(0, 5) || [];
