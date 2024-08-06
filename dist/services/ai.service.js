@@ -13,8 +13,6 @@ const TTS_1 = __importDefault(require("../Helpers/TTS"));
 const explainService = async (req) => {
     if (!req.body.paragraph)
         return { message: "Invalid Request", success: false, data: null };
-    let user = req.headers.user;
-    console.log(user);
     let prompt = `You are a teacher. you have to explain the paragraph below as a script. it may be a pargraph or question. you can also use examples to explain it . To say something, wrap the content int the tag <aud></aud>. To write something on board, wrap the content in the tag <wrt></wrt>. To show a picture on board, wrap the image description in the tag <img>sample: a red ball on table grpahics</img> so that i can generate it using my model. use </clr> to clear board including title.
     always try to write before speaking
 
@@ -51,6 +49,9 @@ const explainService = async (req) => {
     },
     };
 
+    note: always use mathJax to show mathematical equations or anything others. never use mathjax in aud tag. for x^2 + 3, aud tag should be like <aud>x sqaure plus 3</aud>
+    note: always say something about what is it writing next
+    note: explain in way to explain to a kid
 
     prompt/paragraph : ${req.body.paragraph}
     script : `;

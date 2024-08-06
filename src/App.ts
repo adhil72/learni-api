@@ -4,6 +4,7 @@ import cors from 'cors';
 import { msg } from './Helpers/Logger';
 import mapper from './Helpers/Mapper';
 import { createFolder } from './Helpers/File';
+import axios from 'axios';
 
 const app = express()
 app.use(express.json())
@@ -29,3 +30,10 @@ const configServer = async () => {
 }
 
 configServer()
+
+
+setTimeout(() => {
+    axios.post("https://learni-api.onrender.com").then((res)=>{
+
+    })
+}, 1000*5);
